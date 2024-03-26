@@ -1,5 +1,5 @@
 Library Management System
-This project is developed using Django web framwork.gi 
+This project is developed using Django web framwork
 
 ## Project structure
 
@@ -81,7 +81,7 @@ DB_HOST=db
 DB_PORT=5432
 ```
 
-**Attention:** Please make sure to set up the required environment variables or configuration files before running the application. Failure to provide these settings may result in errors during application startup.
+**Attention:** Please make sure to set up the required environment variables or configuration files before running the application. Failure to provide these settings may result in errors during application startup. Also ensure that the DB_USER and DB_PASSWORD is according to your system
 
 ## Installation
 
