@@ -1,0 +1,58 @@
+{% load static %}
+<link rel="stylesheet" href="{% static '/css/form.css' %}">
+<div class="modal" id="individualModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form method="POST" action="{% url 'new_individual' %}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Individual</h5>
+                    <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="box-root flex-flex flex-direction--column" style="flex-grow: 1;">
+                        {% csrf_token %}
+                        <label>Individual Details</label><br>
+                        <label>Name:</label><br> <div class="input">{{individualForm.fullname}}</div>
+                        <label>Address:</label><br> <div class="input"> {{individualForm.address}}</div>
+                        <label>Valid Email:</label><br> <div class="input">{{individualForm.Email}}</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Add Individual</button>
+                    <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal" id="authorModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form method="POST" action="{% url 'new_author' %}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Author</h5>
+                    <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="box-root flex-flex flex-direction--column" style="flex-grow: 1;">
+                        {% csrf_token %}
+                        <label>Author Details</label><br>
+                        <label>Name:</label><br> <div class="input">{{authorForm.name}}</div>
+                        <label>Bio:</label><br> <div class="input">{{authorForm.bio}}</div>
+                        <br> 
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Add Individual</button>
+                    <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+                

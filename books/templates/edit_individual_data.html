@@ -1,0 +1,29 @@
+<title>Edit Individual</title>
+{% extends 'base.html' %}
+
+<body>
+{% block content %}
+
+<div class="form">
+<form method="POST" action=""  id="edit_individual_data">
+    {% csrf_token %}
+    <label>Details</label>
+    <label>Roll Number:</label><br>
+    {{individual}}
+    <!-- <input type="text" name="roll_number" value={{individual.roll_number}} required><br>
+    <label>Individual Name:</label><br>
+    <input type="text" name="individual_name" value={{individual.fullname}} required><br>
+    <label>Individual Address:</label><br> 
+    <input type="text" name="address" value={{individual.address}} required><br>
+    <label>Individual Study Program:</label><br> 
+    <input type="text" name="program" value={{individual.program}} required><br>
+    <label>Individual Guardian/Parent Details</label><br>
+    <label>Full name:</label><br> 
+    <input type="text" name="Guardian_name" value={{individual.Guardian_name}} required><br>
+    <label>Valid Email:</label><br> 
+    <input type="email" name="email" value="{{individual.Email}}" required><br> -->
+    <br> <button type="submit" class="btn btn-success">OK</button>
+</form>
+</div>
+{% endblock %}
+</body>

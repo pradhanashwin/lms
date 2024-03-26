@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Book Details</h2>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <strong>Book ID:</strong> {{ book.id }}
+                    </div>
+                    <div class="mb-3">
+                        <strong>Book Title:</strong> {{ book.book_title }}
+                    </div>
+                    <div class="mb-3">
+                        <strong>Author:</strong> {{ book.author.name }}
+                    </div>
+                    <div class="mb-3">
+                        <strong>Book Pages:</strong> {{ book.book_pages }}
+                    </div>
+                    <div class="mb-3">
+                        <strong>Book Summary:</strong> {{ book.summary }}
+                    </div>
+                    <div class="mb-3">
+                        <strong>Availability:</strong> {% if book.is_borrowed %} Not Available {% else %} Available {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <strong>Number of Instances:</strong> {{ book.bookinstance_set.count }}
+                    </div>
+                    <div class="mb-3">
+                        <a href="{% url 'edit_book_data' book.id %}" class="btn btn-primary">Edit</a>
+                        <a href="{% url 'delete_book_data' book.id %}" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    {% if book.image %}
+                        <img src="{{ book.image.url }}" class="img-fluid" alt="{{ book.book_title }}">
+                    {% else %}
+                        <div class="no-image">
+                            <p>No Image Available</p>
+                            <h3>{{ book.book_title }}</h3>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

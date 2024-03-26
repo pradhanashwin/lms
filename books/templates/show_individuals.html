@@ -1,0 +1,118 @@
+<title>Individual</title>
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="action-bar">
+    <div class="search">
+        <input type="text" class="form-control" id="individual_search_input" name="individual_name" placeholder="Search individual" onkeyup="search_individual()">
+        <div id="individual_searched">
+        </div>
+    </div>
+    <div class="action-btn-div">
+        <button class="action-btn" id="add-individual-btn" type="button">Add Individual</button>
+    </div>
+    <div class="action-btn-div">
+        <button class="action-btn" id="add-author-btn" type="button">Add Author</button>
+    </div>
+</div>
+
+
+<table class="table table-striped">
+<tr>
+    <th>Individual Name</th>
+    <th>Individual Address</th>
+    <th>Email</th>
+    <th>Actions</th>
+</tr>
+    {%for individual in individuals%}
+    <tr id="{{individual.fullname}}" class="individual">
+        <td class="name">{{individual.fullname}}</td>
+        <td>{{individual.address}}</td>
+        <td>{{individual.Email}}</td>
+        <td><a href="edit/individual/{{individual.roll_number}}"><i class="fa fa-edit"></i></a> | <a href="delete/individual/{{individual.roll_number}}"><i class="fa fa-trash-alt"></i></a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% block modal %}
+    {% include 'add_new_individual.html' %}
+{% endblock %}
+
+<script type="text/javascript">
+
+function search_individual() {
+        var input, view;
+        input = document.getElementById('individual_search_input').value.toLowerCase();
+        view = document.getElementById("individual_searched");
+        view.replaceChildren("");
+
+        if (input !== "") {
+            // Send an AJAX request to the backend to search for individual
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    if (xhr.status == 200) {
+                        // Parse the JSON response
+                        var individuals = JSON.parse(xhr.responseText);
+                        if (individuals.length > 0) {
+                            for (var i = 0; i < individuals.length; i++) {
+                                var fullname = document.createTextNode(individuals[i].fullname);
+                                var link = document.createElement("a");
+                                link.setAttribute("href", "#" + individuals[i].fullname);
+
+                                var list_added = document.createElement("li");
+                                list_added.appendChild(fullname);
+                                link.appendChild(list_added);
+                                view.appendChild(link);
+                                view.style.display = "block";
+                            }
+                        } else {
+                            view.innerHTML = "No results found.";
+                            view.style.display = "block";
+                        }
+                    } else {
+                        console.error('Failed to fetch data.');
+                    }
+                }
+            };
+
+            xhr.open('GET', '/search_individual/?query=' + encodeURIComponent(input), true);
+            xhr.send();
+        } else {
+            view.style.display = "none";
+        }
+    }
+
+document.addEventListener('DOMContentLoaded', function() {
+    var individualModal = document.getElementById('individualModal');
+    var addIndividualBtn = document.getElementById('add-individual-btn');
+    var closeModals = document.getElementsByClassName('close-modal');
+    addIndividualBtn.onclick = function() {
+        individualModal.style.display = 'block';
+    }
+
+    var authorModal = document.getElementById('authorModal');
+    var authorBtn = document.getElementById('add-author-btn');
+    
+    authorBtn.onclick = function() {
+        authorModal.style.display = 'block';
+    }
+    for (var i = 0; i < closeModals.length; i++) {
+        closeModals[i].onclick = function() {
+            authorModal.style.display = 'none';
+            individualModal.style.display = 'none';
+        };
+    }
+
+    window.onclick = function(event) {
+        if (event.target == authorModal) {
+            authorModal.style.display = 'none';
+        }
+        else if(event.target == individualModal){
+            individualModal.style.display = 'none';
+        }
+    }
+});
+</script>
+{% endblock %}

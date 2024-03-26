@@ -1,0 +1,62 @@
+<title>Books</title>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<script src="{% static 'js/view_books.js' %}"></script>
+
+<div class="action-bar">
+    <div class="search">
+        <input type="text" class="form-control" id="books_search_input" name="book_name" placeholder="Search a book" onkeyup="search_books()">
+        <div id="book_searched">
+            <label>Search Results</label>
+        </div>
+    </div>
+    <div class="action-btn-div">
+        <button class="action-btn" id="add-books-btn" type="button">Add Books</button>
+    </div>
+    <div class="action-btn-div">
+        <button class="action-btn" id="add-book-instance-btn" type="button">Add Book Instance</button>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <tr>
+        <!-- <th>Book ID</th> -->
+        <th>Book title</th>
+        <th>Book author</th>
+        <th>Book pages</th>
+        <th>Counts</th>
+        <th>Is Available</th>
+        <th>Actions</th>
+    </tr>
+    {% for book in books %}
+        <tr class="book_row">
+            <td class="title"><a href="{% url 'view_book_record' book.id %}">{{ book.book_title }}</a></td>
+            <td>{{ book.author.name }}</td>
+            <td>{{ book.book_pages }}</td>
+            <td>
+                {{ book.bookinstance_set.count }}
+            </td>
+            <td>
+                {% if book.is_available %}
+                    <span><i class="fa fa-check-circle" style="color:green"></i></span>
+                {% else %}
+                    <span><i class="fa fa-times-circle" style="color:rgb(128, 28, 0)"></i></span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'edit_book_data' book.id %}"><i class="fa fa-edit"></i></a> | 
+                <a href="{% url 'delete_book_data' book.id %}"><i class="fa fa-trash-alt"></i></a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+
+    {% block modal %}
+        {% include 'add_new_book.html' %}
+    {% endblock %}
+
+
+{% endblock %}

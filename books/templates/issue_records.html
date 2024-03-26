@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <script src="{% static 'js/add_book_issue.js' %}"></script>
+
+    <div class="action-bar">
+        <div class="search">
+            
+        </div>
+        <div class="action-btn-div">
+            <button class="action-btn" id="add-issue-btn" type="button">Add Issue</button>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <tr>
+            <th>Individual name</th>
+            <th>Book ID</th>
+            <th>Issue Date</th>
+            <th>Due Date</th>
+            <th>Remarks on Issuing</th>
+            <th>Remarks on Return</th>
+            <th>Returned</th>
+            <th>Actions</th>
+        </tr>
+        {% for i in issue %}
+        <tr>
+            <td>{{ i.individual }}</td>
+            <td>{{ i.book_instance.id }}</td>
+            <td>{{ i.issue_date }}</td>
+            <td>{{ i.due_date }}</td>
+            <td>{{ i.remarks_on_issue }}</td>
+            <td>{{ i.remarks_on_return }}</td>
+            <td>
+                {% if i.book_instance.is_borrowed %}
+                <span><i class="fa fa-times-circle" style="color:rgb(128, 28, 0)" title="Return Issued Book"></i></span>
+                <td>
+                    <a href="{% url 'return_issued_book' i.id %}">
+                        <i class="fa fa-arrow-alt-circle-right" title="Return Book"></i>
+                    </a> |
+                    <a href="{% url 'edit_issued' i.id %}">
+                        <i class="fa fa-edit" title="Edit Issued"></i>
+                    </a>
+                </td>
+                {% else %}
+                <span><i class="fa fa-check-circle" style="color:green" title="Book Returned"></i></span>
+                <td>
+                    <a href="{% url 'edit_issued' i.id %}">
+                        <i class="fa fa-edit" title="Edit Issued"></i>
+                    </a> |
+                </td>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% block modal %}
+        {% include 'add_book_issue.html' %}
+    {% endblock %}
+{% endblock %}

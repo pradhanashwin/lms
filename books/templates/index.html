@@ -1,0 +1,55 @@
+<title>Library Management System</title>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static '/css/index.css' %}">
+<div id="container">
+    <div class="kpi">
+        <div class="kpi-card orange">
+            <span class="card-value">{{ total_books }} </span>
+            <span class="card-text">Total Titles</span>
+            <i class="fas fa-book icon"></i>
+        </div>
+
+        <div class="kpi-card purple">
+            <span class="card-value">{{ available_books }} </span>
+            <span class="card-text">Available Books</span>
+            <i class="fas fa-book icon"></i>
+        </div>
+
+        <div class="kpi-card grey-dark">
+            <span class="card-value">{{ issued_books }} </span>
+            <span class="card-text">Issued Books</span>
+            <i class="fas fa-book icon"></i>
+        </div>
+
+        <div class="kpi-card red">
+            <span class="card-value">{{ overdue_books }} </span>
+            <span class="card-text">Overdue Books</span>
+            <i class="fas fa-book icon"></i>
+        </div>
+    </div>
+    <div class="main-container">
+        <section class="">
+            <div class="location" id="home">
+                <h1 id="home">Popular Books</h1>
+                <div class="box">
+                    {% for book in new_books %}
+                    <a class="book-link" href="{% url 'view_book_record' book.id %}" title="{{ book.book_title }}"> 
+                        {% if book.image %}
+                            <img src="{{ book.image.url }}" alt="{{ book.book_title }}">
+                        {% else %}
+                            <div class="no-image"><p>No Image Available</p>
+                            <h3>{{ book.book_title }}</h3></div>
+                        {% endif %}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            </section>
+    </div>
+</div>
+
+
+{% endblock %}
