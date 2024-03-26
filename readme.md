@@ -1,5 +1,5 @@
 Library Management System
-
+This project is developed using Django web framwork.gi 
 
 ## Project structure
 
